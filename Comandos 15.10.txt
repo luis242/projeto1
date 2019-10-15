@@ -1,0 +1,51 @@
+select * from funcionarios where rowid = 'AAAVCuAARAAAJWeAAA';
+
+select * from funcionarios;
+
+select * from vinculos;
+
+select funcionarios.numero, funcionarios.nome, vinculos.numero, funcionarios.ufnasc, vinculos.dtexerc, vinculos.regimejur from funcionarios, vinculos where funcionarios.numero = vinculos.numfunc order by nome desc;
+
+select funcionarios.ufnasc, vinculos.regimejur, count(*) from funcionarios inner join vinculos on funcionarios.numero = vinculos.numfunc group by funcionarios.ufnasc, vinculos.regimejur;
+
+select trim(nome) from funcionarios;
+
+select sysdate+10/24 from funcionarios;
+
+select nvl(ufnasc, '<Não informado>') from funcionarios;
+
+select numero, nome, 'Func' tipo_pessoa from funcionarios union select numero, nome, 'dep' tipo_pessoa from dependentes order by nome asc;
+
+create table funcLuis(
+    numfunc number(8) NOT NULL,
+    nome varchar2(100) NOT NULL,
+    dtnasc date
+);
+
+create table veiculoLuis(
+    numfunc_dono number(8) NOT NULL,
+    placa varchar2(7) NOT NULL,
+    modelo varchar2(50) NOT NULL
+);
+
+drop table veiculoLuis;
+
+alter table funcLuis add constraint PK primary key (numfunc);
+
+alter table veiculoLuis add constraint PK_1 primary key (placa);
+alter table veiculoLuis add constraint FK foreign key (numfunc_dono) references funcLuis(numfunc);
+
+insert into funcLuis values(1, 'Luis', '24/02/95');
+insert into funcLuis values(2, 'Zuilin', '24/02/89');
+insert into funcLuis values(3, 'Zed', '24/02/70');
+
+insert into veiculoLuis values(2, 'ccc3333', 'agile');
+insert into veiculoLuis values(2, 'bbb1111', 'gol');
+insert into veiculoLuis values(1, 'aaa2222', 'corsa');
+insert into veiculoLuis values(3, 'ddd4444', 'spin');
+
+update funcLuis set nome = 'Salve' where nome = 'Luis';
+
+delete from veiculoLuis where placa = 'ddd4444';
+
+commit;

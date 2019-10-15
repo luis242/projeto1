@@ -1,0 +1,55 @@
+connect "nomeDeUsuário"/"senha"@"host":"porta"/"seed"
+
+grant all(select, update, delete, etc) on func to "nomeDeUsuário"
+"grant all on funcionarios to treino"
+
+select * fom "ownerUsuárioSchema"."tabela"
+
+create synonym "nomeParaReferenciarUmaTebelaDeOutroUsuárioSchema" for "ownerUsuárioSachema"."tabela"
+
+(busca de uma string com underline)
+select * from user_objects where object_name like '%EP\_\_TESTE%' escape '\'
+
+
+ROWID = endereço físico da linha na memória
+
+select * from funcionarios where rowid = 'AAAVCuAARAAAJWeAAA'
+(retorna um campo do BD)
+
+
+ROWNUM = número da linha/campo
+select * from funcionarios where rownum <= 100;
+nunca pode ser rownum > algumNumero
+
+
+
+OUTROS TIPOS DE JOIN
+select func.nome, veic.placa, veic.modelo from func, veic where func.num = veic.num
+select func.nome, veic.placa, veic.modelo from func, veic where func.num = veic.num(+) ---> retona todos os resultados da tabeça do func msm se não tiver um veículo
+select func.nome, veic.placa, veic.modelo from func inner join veic where func.num = veic.num
+
+
+FUNÇÕES DE GRUPO
+count, sum, avg, etc
+
+FUNÇÕES DE CARACTERES
+substr - substr(nome, 2,3)         2 = posição inicial   3 = quantos caracateres eu quero a partir da posição inicial
+instr(nome, 'R')   mostra a posição em que o parâmetro está na String
+lpad(nome, 200, '*')     completa a String com * até chegar em 200 caracteres à esquerda
+rpadr(nome, 200, '*')    completa a String com * até chegar em 200 caracteres à direita
+
+
+DML(SQL) 
+ -> insert/update/delete
+
+DDL(PL/SQL)
+ -> create
+
+
+select numero, nome, 'Func' tipo_pessoa from funcionarios union select numero, nome, 'dep' tipo_pessoa from dependentes order by nome asc
+select numero, nome, 'Func' tipo_pessoa from funcionarios union all select numero, nome, 'dep' tipo_pessoa from dependentes order by nome asc
+(só funciona se retornar os mesmo valores: numero, nome, 'Func' tipo_pessoa)
+
+select funcionarios.numero, funcionarios.nome, vinculos.numero, funcionarios.ufnasc, vinculos.dtexerc, vinculos.regimejur from funcionarios, vinculos where funcionarios.numero = vinculos.numfunc order by nome desc;
+
+select funcionarios.numero, funcionarios.nome, vinculos.numero, funcionarios.ufnasc, vinculos.dtexerc, vinculos.regimejur from funcionarios inner join vinculos on funcionarios.numero = vinculos.numfunc order by nome asc
